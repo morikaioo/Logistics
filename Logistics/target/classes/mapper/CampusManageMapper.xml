@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxl.logistic.dao.CampusManageMapper">
+  <resultMap id="BaseResultMap" type="wxl.logistic.bean.CampusManage">
+    <id column="CAMPUS_ID" jdbcType="INTEGER" property="campusId" />
+    <result column="CAMPUS_CATEGORY" jdbcType="VARCHAR" property="campusCategory" />
+    <result column="CAMPUS_CONTENT" jdbcType="VARCHAR" property="campusContent" />
+    <result column="CAMPUS_HANDLE" jdbcType="VARCHAR" property="campusHandle" />
+    <result column="CAMPUS_TIME" jdbcType="TIMESTAMP" property="campusTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CAMPUS_ID, CAMPUS_CATEGORY, CAMPUS_CONTENT, CAMPUS_HANDLE, CAMPUS_TIME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from campus_manage
+    where CAMPUS_ID = #{campusId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from campus_manage
+    where CAMPUS_ID = #{campusId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="wxl.logistic.bean.CampusManage">
+    insert into campus_manage (CAMPUS_ID, CAMPUS_CATEGORY, CAMPUS_CONTENT, 
+      CAMPUS_HANDLE, CAMPUS_TIME)
+    values (#{campusId,jdbcType=INTEGER}, #{campusCategory,jdbcType=VARCHAR}, #{campusContent,jdbcType=VARCHAR}, 
+      #{campusHandle,jdbcType=VARCHAR}, #{campusTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="wxl.logistic.bean.CampusManage">
+    insert into campus_manage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="campusId != null">
+        CAMPUS_ID,
+      </if>
+      <if test="campusCategory != null">
+        CAMPUS_CATEGORY,
+      </if>
+      <if test="campusContent != null">
+        CAMPUS_CONTENT,
+      </if>
+      <if test="campusHandle != null">
+        CAMPUS_HANDLE,
+      </if>
+      <if test="campusTime != null">
+        CAMPUS_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="campusId != null">
+        #{campusId,jdbcType=INTEGER},
+      </if>
+      <if test="campusCategory != null">
+        #{campusCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="campusContent != null">
+        #{campusContent,jdbcType=VARCHAR},
+      </if>
+      <if test="campusHandle != null">
+        #{campusHandle,jdbcType=VARCHAR},
+      </if>
+      <if test="campusTime != null">
+        #{campusTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wxl.logistic.bean.CampusManage">
+    update campus_manage
+    <set>
+      <if test="campusCategory != null">
+        CAMPUS_CATEGORY = #{campusCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="campusContent != null">
+        CAMPUS_CONTENT = #{campusContent,jdbcType=VARCHAR},
+      </if>
+      <if test="campusHandle != null">
+        CAMPUS_HANDLE = #{campusHandle,jdbcType=VARCHAR},
+      </if>
+      <if test="campusTime != null">
+        CAMPUS_TIME = #{campusTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where CAMPUS_ID = #{campusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxl.logistic.bean.CampusManage">
+    update campus_manage
+    set CAMPUS_CATEGORY = #{campusCategory,jdbcType=VARCHAR},
+      CAMPUS_CONTENT = #{campusContent,jdbcType=VARCHAR},
+      CAMPUS_HANDLE = #{campusHandle,jdbcType=VARCHAR},
+      CAMPUS_TIME = #{campusTime,jdbcType=TIMESTAMP}
+    where CAMPUS_ID = #{campusId,jdbcType=INTEGER}
+  </update>
+</mapper>

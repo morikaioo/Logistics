@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxl.logistic.dao.RepairsMapper">
+  <resultMap id="BaseResultMap" type="wxl.logistic.bean.Repairs">
+    <id column="REPAIRS_ID" jdbcType="INTEGER" property="repairsId" />
+    <result column="REPAIRS_PERSON" jdbcType="VARCHAR" property="repairsPerson" />
+    <result column="REPAIRS_CONTENT" jdbcType="VARCHAR" property="repairsContent" />
+    <result column="REPAIRS_CATEGORY" jdbcType="VARCHAR" property="repairsCategory" />
+    <result column="REPAIRS_address" jdbcType="VARCHAR" property="repairsAddress" />
+    <result column="REPAIRS_TIME" jdbcType="TIMESTAMP" property="repairsTime" />
+    <result column="REPAIRS_STATUS" jdbcType="VARCHAR" property="repairsStatus" />
+    <result column="HANDLE_TIME" jdbcType="TIMESTAMP" property="handleTime" />
+    <result column="REPAIRS_HANDLE" jdbcType="VARCHAR" property="repairsHandle" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    REPAIRS_ID, REPAIRS_PERSON, REPAIRS_CONTENT, REPAIRS_CATEGORY, REPAIRS_address, REPAIRS_TIME, 
+    REPAIRS_STATUS, HANDLE_TIME, REPAIRS_HANDLE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from repairs
+    where REPAIRS_ID = #{repairsId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 分页查询 -->
+  <select id="selectLimit" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from repairs
+    <where>
+      <if test="crepairs.repairsId != null">
+       REPAIRS_ID = #{crepairs.repairsId,jdbcType=INTEGER}
+      </if>
+      <if test="crepairs.repairsId != null and crepairs.repairsPerson != null">
+      	and
+      </if>
+      <if test="crepairs.repairsPerson != null">
+        REPAIRS_PERSON = #{crepairs.repairsPerson,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsPerson != null and crepairs.repairsContent != null">
+      	and
+      </if>
+      <if test="crepairs.repairsContent != null">
+        REPAIRS_CONTENT = #{crepairs.repairsContent,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsContent != null and crepairs.repairsCategory != null">
+      	and
+      </if>
+      <if test="crepairs.repairsCategory != null">
+        REPAIRS_CATEGORY = #{crepairs.repairsCategory,jdbcType=INTEGER}
+      </if>
+      <if test="crepairs.repairsCategory != null and crepairs.repairsAddress != null">
+      	and
+      </if>
+      <if test="crepairs.repairsAddress != null">
+        REPAIRS_address = #{crepairs.repairsAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsAddress != null and crepairs.repairsTime != null">
+      	and
+      </if>
+      <if test="crepairs.repairsTime != null">
+        REPAIRS_TIME = #{crepairs.repairsTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="crepairs.repairsTime != null and crepairs.repairsStatus != null">
+      	and
+      </if>
+      <if test="crepairs.repairsStatus != null">
+        REPAIRS_STATUS = #{crepairs.repairsStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsStatus != null and crepairs.handleTime != null">
+      	and
+      </if>
+      <if test="crepairs.handleTime != null">
+        HANDLE_TIME = #{crepairs.handleTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="crepairs.handleTime != null and crepairs.repairsHandle != null">
+      	and
+      </if>
+      <if test="crepairs.repairsHandle != null">
+        REPAIRS_HANDLE = #{crepairs.repairsHandle,jdbcType=TIMESTAMP}
+      </if>
+		</where>
+		 order by REPAIRS_TIME desc
+		 <if test="start != null and pageSize != null">
+        limit #{start},#{pageSize}
+      </if>
+  </select>
+  
+  <!-- 按条件查询记录条数 -->
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from repairs
+    <where>
+	  <if test="crepairs.repairsId != null">
+       REPAIRS_ID = #{crepairs.repairsId,jdbcType=INTEGER}
+      </if>
+      <if test="crepairs.repairsId != null and crepairs.repairsPerson != null">
+      	and
+      </if>
+      <if test="crepairs.repairsPerson != null">
+        REPAIRS_PERSON = #{crepairs.repairsPerson,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsPerson != null and crepairs.repairsContent != null">
+      	and
+      </if>
+      <if test="crepairs.repairsContent != null">
+        REPAIRS_CONTENT = #{crepairs.repairsContent,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsContent != null and crepairs.repairsCategory != null">
+      	and
+      </if>
+      <if test="crepairs.repairsCategory != null">
+        REPAIRS_CATEGORY = #{crepairs.repairsCategory,jdbcType=INTEGER}
+      </if>
+      <if test="crepairs.repairsCategory != null and crepairs.repairsAddress != null">
+      	and
+      </if>
+      <if test="crepairs.repairsAddress != null">
+        REPAIRS_address = #{crepairs.repairsAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsAddress != null and crepairs.repairsTime != null">
+      	and
+      </if>
+      <if test="crepairs.repairsTime != null">
+        REPAIRS_TIME = #{crepairs.repairsTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="crepairs.repairsTime != null and crepairs.repairsStatus != null">
+      	and
+      </if>
+      <if test="crepairs.repairsStatus != null">
+        REPAIRS_STATUS = #{crepairs.repairsStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="crepairs.repairsStatus != null and crepairs.handleTime != null">
+      	and
+      </if>
+      <if test="crepairs.handleTime != null">
+        HANDLE_TIME = #{crepairs.handleTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="crepairs.handleTime != null and crepairs.repairsHandle != null">
+      	and
+      </if>
+      <if test="crepairs.repairsHandle != null">
+        REPAIRS_HANDLE = #{crepairs.repairsHandle,jdbcType=TIMESTAMP}
+      </if>
+		</where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from repairs
+    where REPAIRS_ID = #{repairsId,jdbcType=INTEGER}
+  </delete>
+  
+  <!-- 插入报修信息 -->
+  <insert id="insert" parameterType="wxl.logistic.bean.Repairs">
+    insert into repairs (REPAIRS_PERSON, REPAIRS_CONTENT, 
+      REPAIRS_CATEGORY, REPAIRS_address, REPAIRS_TIME, 
+      REPAIRS_STATUS, HANDLE_TIME, REPAIRS_HANDLE
+      )
+    values (#{repairsPerson,jdbcType=VARCHAR}, #{repairsContent,jdbcType=VARCHAR}, 
+      #{repairsCategory,jdbcType=VARCHAR}, #{repairsAddress,jdbcType=VARCHAR}, now(), 
+      #{repairsStatus,jdbcType=VARCHAR}, #{handleTime,jdbcType=TIMESTAMP}, #{repairsHandle,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <!-- 按条件插入报修信息 -->
+  <insert id="insertSelective" parameterType="wxl.logistic.bean.Repairs">
+    insert into repairs
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="repairsId != null">
+        REPAIRS_ID,
+      </if>
+      <if test="repairsPerson != null">
+        REPAIRS_PERSON,
+      </if>
+      <if test="repairsContent != null">
+        REPAIRS_CONTENT,
+      </if>
+      <if test="repairsCategory != null">
+        REPAIRS_CATEGORY,
+      </if>
+      <if test="repairsAddress != null">
+        REPAIRS_address,
+      </if>
+      <if test="repairsTime != null">
+        REPAIRS_TIME,
+      </if>
+      <if test="repairsStatus != null">
+        REPAIRS_STATUS,
+      </if>
+      <if test="handleTime != null">
+        HANDLE_TIME,
+      </if>
+      <if test="repairsHandle != null">
+        REPAIRS_HANDLE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="repairsId != null">
+        #{repairsId,jdbcType=INTEGER},
+      </if>
+      <if test="repairsPerson != null">
+        #{repairsPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsContent != null">
+        #{repairsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsCategory != null">
+        #{repairsCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsAddress != null">
+        #{repairsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsTime != null">
+        #{repairsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repairsStatus != null">
+        #{repairsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repairsHandle != null">
+        #{repairsHandle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wxl.logistic.bean.Repairs">
+    update repairs
+    <set>
+      <if test="repairsPerson != null and repairsPerson != '' ">
+        REPAIRS_PERSON = #{repairsPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsContent != null and repairsContent != '' ">
+        REPAIRS_CONTENT = #{repairsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsCategory != null and repairsCategory != '' ">
+        REPAIRS_CATEGORY = #{repairsCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsAddress != null and repairsAddress != '' ">
+        REPAIRS_address = #{repairsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="repairsTime != null">
+        REPAIRS_TIME = #{repairsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repairsStatus != null and repairsStatus != '' ">
+        REPAIRS_STATUS = #{repairsStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="handleTime != null">
+        HANDLE_TIME = now(),
+      </if>
+      <if test="repairsHandle != null and repairsHandle != '' ">
+        REPAIRS_HANDLE = #{repairsHandle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where REPAIRS_ID = #{repairsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxl.logistic.bean.Repairs">
+    update repairs
+    set REPAIRS_PERSON = #{repairsPerson,jdbcType=VARCHAR},
+      REPAIRS_CONTENT = #{repairsContent,jdbcType=VARCHAR},
+      REPAIRS_CATEGORY = #{repairsCategory,jdbcType=VARCHAR},
+      REPAIRS_address = #{repairsAddress,jdbcType=VARCHAR},
+      REPAIRS_TIME = #{repairsTime,jdbcType=TIMESTAMP},
+      REPAIRS_STATUS = #{repairsStatus,jdbcType=VARCHAR},
+      HANDLE_TIME = #{handleTime,jdbcType=TIMESTAMP},
+      REPAIRS_HANDLE = #{repairsHandle,jdbcType=VARCHAR}
+    where REPAIRS_ID = #{repairsId,jdbcType=INTEGER}
+  </update>
+</mapper>

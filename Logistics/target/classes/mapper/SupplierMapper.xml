@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxl.logistic.dao.SupplierMapper">
+  <resultMap id="BaseResultMap" type="wxl.logistic.bean.Supplier">
+    <id column="SUPPLIER_ID" jdbcType="INTEGER" property="supplierId" />
+    <result column="SUPPLIER_NAME" jdbcType="VARCHAR" property="supplierName" />
+    <result column="CONTACT" jdbcType="VARCHAR" property="Contact" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="Address" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="Email" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SUPPLIER_ID, SUPPLIER_NAME, CONTACT, ADDRESS, EMAIL, UPDATE_TIME
+  </sql>
+  <select id="selectSpPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from supplier
+    where SUPPLIER_ID = #{supplierId,jdbcType=INTEGER}
+  </select>
+  
+<!--  分页查询   -->
+   <select id="selectLimit" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from supplier
+    <where>
+    <if test="csupplier.supplierName != null">
+        SUPPLIER_NAME = #{csupplier.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.supplierName != null and csupplier.Contact != null">
+      	and
+      </if>
+      <if test="csupplier.Contact != null">
+        CONTACT = #{csupplier.Contact,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.Contact != null and csupplier.Address != null">
+      	and
+      </if>
+      <if test="csupplier.Address != null">
+        ADDRESS = #{csupplier.Address,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.Address != null and csupplier.Email != null">
+      	and
+      </if>
+      <if test="csupplier.Email != null">
+        EMAIL = #{csupplier.Email,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.Email != null and csupplier.updateTime != null">
+      	and
+      </if>
+      <if test="csupplier.updateTime != null">
+        UPDATE_TIME = #{csupplier.updateTime,jdbcType=TIMESTAMP},
+      </if>
+		</where>
+		 order by UPDATE_TIME desc
+		 <if test="start != null and pageSize != null">
+        limit #{start},#{pageSize}
+      </if>
+  </select>
+   
+  <!-- 按条件查询记录条数 -->
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from supplier
+    <where>
+      <if test="csupplier.supplierName != null">
+        SUPPLIER_NAME = #{csupplier.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.supplierName != null and csupplier.Contact != null">
+      	and
+      </if>
+	  <if test="csupplier.Contact != null">
+        CONTACT = #{csupplier.Contact,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.Contact != null and csupplier.Address != null">
+      	and
+      </if>
+      <if test="csupplier.Address != null">
+        ADDRESS = #{csupplier.Address,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.Address != null and csupplier.Email != null">
+      	and
+      </if>
+      <if test="csupplier.Email != null">
+        EMAIL = #{csupplier.Email,jdbcType=VARCHAR},
+      </if>
+      <if test="csupplier.Email != null and csupplier.updateTime != null">
+      	and
+      </if>
+      <if test="csupplier.updateTime != null">
+        UPDATE_TIME = #{csupplier.updateTime,jdbcType=TIMESTAMP},
+      </if>
+		</where>
+  </select>
+  
+  <delete id="deleteSpPrimaryKey" parameterType="java.lang.Integer">
+    delete from supplier
+    where SUPPLIER_ID = #{supplierId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="wxl.logistic.bean.Supplier">
+    insert into supplier (SUPPLIER_ID, SUPPLIER_NAME, CONTACT, ADDRESS, 
+      EMAIL, UPDATE_TIME)
+    values (#{supplierId,jdbcType=INTEGER}, #{supplierName,jdbcType=VARCHAR}, 
+    #{Contact,jdbcType=VARCHAR}, #{Address,jdbcType=VARCHAR}, #{Email,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="wxl.logistic.bean.Supplier">
+    insert into supplier
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="supplierId != null">
+        SUPPLIER_ID,
+      </if>
+      <if test="supplierName != null">
+        SUPPLIER_NAME,
+      </if>
+      <if test="Contact != null">
+        CONTACT,
+      </if>
+      <if test="Address != null">
+        ADDRESS,
+      </if>
+      <if test="Email != null">
+        EMAIL,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="supplierId != null">
+        #{supplierId,jdbcType=INTEGER},
+      </if>
+      <if test="supplierName != null">
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="Contact != null">
+        #{Contact,jdbcType=VARCHAR},
+      </if>
+      <if test="Address != null">
+        #{Address,jdbcType=VARCHAR},
+      </if>
+      <if test="Email != null">
+        #{Email,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateSpPrimaryKeySelective" parameterType="wxl.logistic.bean.Supplier">
+    update supplier
+    <set>
+      <if test="supplierName != null">
+        SUPPLIER_NAME = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="Contact != null">
+        CONTACT = #{Contact,jdbcType=VARCHAR},
+      </if>
+      <if test="Address != null">
+        ADDRESS = #{Address,jdbcType=VARCHAR},
+      </if>
+      <if test="Email != null">
+        EMAIL = #{Email,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where SUPPLIER_ID = #{supplierId,jdbcType=INTEGER}
+  </update>
+  <update id="updateSpPrimaryKey" parameterType="wxl.logistic.bean.Supplier">
+    update supplier
+    set SUPPLIER_NAME = #{supplierName,jdbcType=VARCHAR},
+      CONTACT = #{Contact,jdbcType=VARCHAR},
+      ADDRESS = #{Address,jdbcType=VARCHAR},
+      EMAIL = #{Email,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where SUPPLIER_ID = #{supplierId,jdbcType=INTEGER}
+  </update>
+</mapper>

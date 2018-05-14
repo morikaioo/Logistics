@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxl.logistic.dao.BuyerMapper">
+  <resultMap id="BaseResultMap" type="wxl.logistic.bean.Buyer">
+    <id column="BUYER_ID" jdbcType="INTEGER" property="buyerId" />
+    <result column="SUPPLIER_NAME" jdbcType="VARCHAR" property="supplierName" />
+    <result column="FOOD_NAME" jdbcType="VARCHAR" property="foodName" />
+    <result column="FOOD_CATEGORY" jdbcType="VARCHAR" property="foodCategory" />
+    <result column="PRICE" jdbcType="REAL" property="price" />
+    <result column="FOOD_NUMBER" jdbcType="INTEGER" property="foodNumber" />
+    <result column="BUY_DATE" jdbcType="TIMESTAMP" property="buyDate" />
+    <result column="BUY_NAME" jdbcType="VARCHAR" property="buyName" />
+   <!--  <result column="AMOUNT" jdbcType="REAL" property="Amount" /> -->
+  </resultMap>
+  <sql id="Base_Column_List">
+    BUYER_ID, SUPPLIER_NAME, FOOD_NAME, FOOD_CATEGORY, PRICE, FOOD_NUMBER, BUY_DATE, BUY_NAME, (PRICE*FOOD_NUMBER*2) AS SUM
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from buyer
+    where BUYER_ID = #{buyerId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 分页查询 -->
+  <select id="selectLimit" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from buyer
+    <where>
+    <if test="cbuyer.supplierName != null">
+        SUPPLIER_NAME = #{cbuyer.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyer.supplierName != null and cbuyer.foodName != null">
+      	and
+      </if>
+      <if test="cbuyer.foodName != null">
+        FOOD_NAME = #{cbuyer.foodName,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyer.foodName != null and cbuyer.foodCategory != null">
+      	and
+      </if>
+      <if test="cbuyer.foodCategory != null">
+        FOOD_CATEGORY = #{cbuyer.foodCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyer.foodCategory != null and cbuyer.price != null">
+      	and
+      </if>
+      <if test="cbuyer.price != null">
+        PRICE = #{cbuyer.price,jdbcType=REAL},
+      </if>
+      <if test="cbuyer.price != null and cbuyer.foodNumber != null">
+      	and
+      </if>
+      <if test="cbuyer.foodNumber != null">
+        FOOD_NUMBER = #{cbuyer.foodNumber,jdbcType=INTEGER},
+      </if>
+      <if test="cbuyer.foodNumber != null and cbuyer.buyDate != null">
+      	and
+      </if>
+      <if test="cbuyer.buyDate != null">
+        BUY_DATE = #{cbuyer.buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbuyer.buyDate != null and cbuyer.buyName != null">
+      	and
+      </if>
+      <if test="cbuyer.buyName != null">
+        BUY_NAME = #{cbuyer.buyName,jdbcType=VARCHAR},
+        </if>
+        <if test="cbuyer.buyName != null and cbuyer.Amount != null">
+      	and
+      </if>
+     <!-- <if test="cbuyer.Amount != null">
+        AMOUNT =#{cbuyer.Amount,jdbcType=REAL}, 
+        </if> -->
+		</where>
+		 order by BUY_DATE desc
+		 <if test="start != null and pageSize != null">
+        limit #{start},#{pageSize}
+      </if>
+  </select>
+  
+  <!-- 按条件查询记录条数 -->
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from buyer
+    <where>
+      <if test="cbuyer.supplierName != null">
+        SUPPLIER_NAME = #{cbuyer.supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyer.supplierName != null and cbuyer.foodName != null">
+      	and
+      </if>
+	  <if test="cbuyer.foodName != null">
+        FOOD_NAME = #{cbuyer.foodName,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyer.foodName != null and cbuyer.foodCategory != null">
+      	and
+      </if>
+      <if test="cbuyer.foodCategory != null">
+        FOOD_CATEGORY = #{cbuyer.foodCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyer.foodCategory != null and cbuyer.price != null">
+      	and
+      </if>
+      <if test="cbuyer.price != null">
+        PRICE = #{cbuyer.price,jdbcType=REAL},
+      </if>
+      <if test="cbuyer.price != null and cbuyer.foodNumber != null">
+      	and
+      </if>
+      <if test="cbuyer.foodNumber != null">
+        FOOD_NUMBER = #{cbuyer.foodNumber,jdbcType=INTEGER},
+      </if>
+      <if test="cbuyer.foodNumber != null and cbuyer.buyDate != null">
+      	and
+      </if>
+      <if test="cbuyer.buyDate != null">
+        BUY_DATE = #{cbuyer.buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cbuyer.buyDate != null and cbuyer.buyName != null">
+      	and
+      </if>
+      <if test="cbuyer.buyName != null">
+        BUY_NAME = #{cbuyer.buyName,jdbcType=VARCHAR},
+      </if>
+      <if test="cbuyer.buyName != null and cbuyer.Amount != null">
+      	and
+      </if>
+      <!-- <if test="cbuyer.Amount != null">
+        AMOUNT = #{cbuyer.Amount,jdbcType=REAL},
+        </if> -->
+		</where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from buyer
+    where BUYER_ID = #{buyerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="wxl.logistic.bean.Buyer">
+    insert into buyer (BUYER_ID, SUPPLIER_NAME, FOOD_NAME, FOOD_CATEGORY, 
+      PRICE, FOOD_NUMBER, BUY_DATE, BUY_NAME)
+    values (#{buyerId,jdbcType=INTEGER}, #{supplierName,jdbcType=VARCHAR}, #{foodName,jdbcType=VARCHAR}, #{foodCategory,jdbcType=VARCHAR}, 
+      #{price,jdbcType=REAL}, #{foodNumber,jdbcType=INTEGER}, #{buyDate,jdbcType=TIMESTAMP}, 
+      #{buyName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="wxl.logistic.bean.Buyer">
+    insert into buyer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="buyerId != null">
+        BUYER_ID,
+      </if>
+      <if test="supplierName != null">
+        SUPPLIER_NAME,
+      </if>
+      <if test="foodName != null">
+        FOOD_NAME,
+      </if>
+      <if test="foodCategory != null">
+        FOOD_CATEGORY,
+      </if>
+      <if test="price != null">
+        PRICE,
+      </if>
+      <if test="foodNumber != null">
+        FOOD_NUMBER,
+      </if>
+      <if test="buyDate != null">
+        BUY_DATE,
+      </if>
+      <if test="buyName != null">
+        BUY_NAME,
+      </if>
+      <!-- <if test="Amount != null">
+        AMOUNT
+      </if> -->
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="buyerId != null">
+        #{buyerId,jdbcType=INTEGER},
+      </if>
+      <if test="supplierName != null">
+        #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="foodName != null">
+        #{foodName,jdbcType=VARCHAR},
+      </if>
+      <if test="foodCategory != null">
+        #{foodCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="foodNumber != null">
+        #{foodNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyDate != null">
+        #{buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyName != null">
+        #{buyName,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="Amount != null">
+        #{Amount,jdbcType=REAL},
+      </if> -->
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wxl.logistic.bean.Buyer">
+    update buyer
+    <set>
+      <if test="supplierName != null">
+        SUPPLIER_NAME = #{supplierName,jdbcType=VARCHAR},
+      </if>
+      <if test="foodName != null">
+        FOOD_NAME = #{foodName,jdbcType=VARCHAR},
+      </if>
+      <if test="foodCategory != null">
+        FOOD_CATEGORY = #{foodCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        PRICE = #{price,jdbcType=REAL},
+      </if>
+      <if test="foodNumber != null">
+        FOOD_NUMBER = #{foodNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyDate != null">
+        BUY_DATE = #{buyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyName != null">
+        BUY_NAME = #{buyName,jdbcType=VARCHAR},
+      </if>
+     <!--  <if test="Amount != null">
+        AMOUNT = PRICE*FOOD_NUMBER*2
+        #{Amount,jdbcType=REAL},
+      </if> -->
+    </set>
+    where BUYER_ID = #{buyerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxl.logistic.bean.Buyer">
+    update buyer
+    set SUPPLIER_NAME = #{supplierName,jdbcType=VARCHAR},
+      FOOD_NAME = #{foodName,jdbcType=VARCHAR},
+      FOOD_CATEGORY = #{foodCategory,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=REAL},
+      FOOD_NUMBER = #{foodNumber,jdbcType=INTEGER},
+      BUY_DATE = #{buyDate,jdbcType=TIMESTAMP},
+      BUY_NAME = #{buyName,jdbcType=VARCHAR},
+     <!--  AMOUNT = PRICE*FOOD_NUMBER*2 -->
+     <!--  #{Amount,jdbcType=INTEGER} -->
+    where BUYER_ID = #{buyerId,jdbcType=REAL}
+  </update>
+</mapper>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxl.logistic.dao.MaterialMapper">
+  <resultMap id="BaseResultMap" type="wxl.logistic.bean.Material">
+    <id column="MATERIAL_ID" jdbcType="INTEGER" property="materialId" />
+    <result column="MATERIAL_NUM" jdbcType="VARCHAR" property="materialNum" />
+    <result column="MATERIAL_CATEGORY" jdbcType="VARCHAR" property="materialCategory" />
+    <result column="DETAILED_STUFF" jdbcType="VARCHAR" property="detailedStuff" />
+    <result column="MATERIAL_NUMBER" jdbcType="INTEGER" property="materialNumber" />
+    <result column="MATERIAL_STATUS" jdbcType="VARCHAR" property="materialStatus" />
+    <result column="RECEIVE_TIME" jdbcType="TIMESTAMP" property="receiveTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="principal" jdbcType="VARCHAR" property="principal" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    MATERIAL_ID, MATERIAL_NUM, MATERIAL_CATEGORY, DETAILED_STUFF, MATERIAL_NUMBER, MATERIAL_STATUS, 
+    RECEIVE_TIME, UPDATE_TIME, principal
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material
+    where MATERIAL_ID = #{materialId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 分页查询 -->
+  <select id="selectLimit" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material
+    <where>
+      <if test="cmaterial.materialId != null">
+       MATERIAL_ID = #{cmaterial.materialId,jdbcType=INTEGER}
+      </if>
+      <if test="cmaterial.materialId != null and cmaterial.materialNum != null">
+      	and
+      </if>   
+        <if test="cmaterial.materialNum != null">
+       MATERIAL_NUM = #{cmaterial.materialNum,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.materialNum != null and cmaterial.materialCategory != null">
+      	and
+      </if>
+      <if test="cmaterial.materialCategory != null">
+        MATERIAL_CATEGORY = #{cmaterial.materialCategory,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.materialCategory != null and cmaterial.detailedStuff != null">
+      	and
+      </if>
+      <if test="cmaterial.detailedStuff != null">
+        DETAILED_STUFF = #{cmaterial.detailedStuff,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.detailedStuff != null and cmaterial.materialNumber != null">
+      	and
+      </if>
+      <if test="cmaterial.materialNumber != null">
+        MATERIAL_NUMBER = #{cmaterial.materialNumber,jdbcType=INTEGER}
+      </if>
+      <if test="cmaterial.materialNumber != null and cmaterial.materialStatus != null">
+      	and
+      </if>
+      <if test="cmaterial.materialStatus != null">
+        MATERIAL_STATUS = #{cmaterial.materialStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.materialStatus != null and cmaterial.updateTime != null">
+      	and
+      </if>
+      <if test="cmaterial.updateTime != null">
+        UPDATE_TIME = #{cmaterial.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="cmaterial.updateTime != null and cmaterial.principal != null">
+      	and
+      </if>
+      <if test="cmaterial.principal != null">
+        principal = #{cmaterial.principal,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.principal != null and cmaterial.receiveTime != null">
+      	and
+      </if>
+      <if test="cmaterial.receiveTime != null">
+        RECEIVE_TIME = #{cmaterial.receiveTime,jdbcType=TIMESTAMP}
+      </if>
+		</where>
+		 order by RECEIVE_TIME desc
+		 <if test="start != null and pageSize != null">
+        limit #{start},#{pageSize}
+      </if>
+  </select>
+  
+  <!-- 按条件查询记录条数 -->
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from material
+    <where>
+	  <if test="cmaterial.materialId != null">
+       MATERIAL_ID = #{cmaterial.materialId,jdbcType=INTEGER}
+      </if>
+      <if test="cmaterial.materialId != null and cmaterial.materialNum != null">
+      	and
+      </if>
+       <if test="cmaterial.materialNum != null">
+       MATERIAL_NUM = #{cmaterial.materialNum,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.materialNum != null and cmaterial.materialCategory != null">
+      	and
+      </if>
+      <if test="cmaterial.materialCategory != null">
+        MATERIAL_CATEGORY = #{cmaterial.materialCategory,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.materialCategory != null and cmaterial.detailedStuff != null">
+      	and
+      </if>
+      <if test="cmaterial.detailedStuff != null">
+        DETAILED_STUFF = #{cmaterial.detailedStuff,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.detailedStuff != null and cmaterial.materialNumber != null">
+      	and
+      </if>
+      <if test="cmaterial.materialNumber != null">
+        MATERIAL_NUMBER = #{cmaterial.materialNumber,jdbcType=INTEGER}
+      </if>
+      <if test="cmaterial.materialNumber != null and cmaterial.materialStatus != null">
+      	and
+      </if>
+      <if test="cmaterial.materialStatus != null">
+        MATERIAL_STATUS = #{cmaterial.materialStatus,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.materialStatus != null and cmaterial.updateTime != null">
+      	and
+      </if>
+      <if test="cmaterial.updateTime != null">
+        UPDATE_TIME = #{cmaterial.updateTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="cmaterial.updateTime != null and cmaterial.principal != null">
+      	and
+      </if>
+      <if test="cmaterial.principal != null">
+        principal = #{cmaterial.principal,jdbcType=VARCHAR}
+      </if>
+      <if test="cmaterial.principal != null and cmaterial.receiveTime != null">
+      	and
+      </if>
+      <if test="cmaterial.receiveTime != null">
+        RECEIVE_TIME = #{cmaterial.receiveTime,jdbcType=TIMESTAMP}
+      </if>
+		</where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from material
+    where MATERIAL_ID = #{materialId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="wxl.logistic.bean.Material">
+    insert into material (MATERIAL_ID, MATERIAL_NUM, MATERIAL_CATEGORY, DETAILED_STUFF, 
+      MATERIAL_NUMBER, MATERIAL_STATUS, RECEIVE_TIME, 
+      UPDATE_TIME, principal)
+    values (#{materialId,jdbcType=INTEGER},#{materialNum,jdbcType=VARCHAR},#{materialCategory,jdbcType=VARCHAR}, #{detailedStuff,jdbcType=VARCHAR}, 
+      #{materialNumber,jdbcType=INTEGER}, #{materialStatus,jdbcType=VARCHAR}, #{receiveTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{principal,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="wxl.logistic.bean.Material">
+    insert into material
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="materialId != null">
+        MATERIAL_ID,
+      </if>
+      <if test="materialNum != null">
+        MATERIAL_NUM,
+      </if>
+      <if test="materialCategory != null">
+        MATERIAL_CATEGORY,
+      </if>
+      <if test="detailedStuff != null">
+        DETAILED_STUFF,
+      </if>
+      <if test="materialNumber != null">
+        MATERIAL_NUMBER,
+      </if>
+      <if test="materialStatus != null">
+        MATERIAL_STATUS,
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+      <if test="principal != null">
+        principal
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="materialId != null">
+        #{materialId,jdbcType=INTEGER},
+      </if>
+      <if test="materialNum != null">
+        #{materialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="materialCategory != null">
+        #{materialCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedStuff != null">
+        #{detailedStuff,jdbcType=VARCHAR},
+      </if>
+      <if test="materialNumber != null">
+        #{materialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="materialStatus != null">
+        #{materialStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="principal != null">
+        #{principal,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wxl.logistic.bean.Material">
+    update material
+    <set>
+    <if test="materialNum != null">
+        MATERIAL_NUM = #{materialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="materialCategory != null">
+        MATERIAL_CATEGORY = #{materialCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="detailedStuff != null">
+        DETAILED_STUFF = #{detailedStuff,jdbcType=VARCHAR},
+      </if>
+      <if test="materialNumber != null">
+        MATERIAL_NUMBER = #{materialNumber,jdbcType=INTEGER},
+      </if>
+      <if test="materialStatus != null">
+        MATERIAL_STATUS = #{materialStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="receiveTime != null">
+        RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="principal != null">
+        principal = #{principal,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MATERIAL_ID = #{materialId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxl.logistic.bean.Material">
+    update material
+    set MATERIAL_NUM = #{materialNum,jdbcType=VARCHAR},
+      MATERIAL_CATEGORY = #{materialCategory,jdbcType=VARCHAR},
+      DETAILED_STUFF = #{detailedStuff,jdbcType=VARCHAR},
+      MATERIAL_NUMBER = #{materialNumber,jdbcType=INTEGER},
+      MATERIAL_STATUS = #{materialStatus,jdbcType=VARCHAR},
+      RECEIVE_TIME = #{receiveTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      principal = #{principal,jdbcType=VARCHAR}
+    where MATERIAL_ID = #{materialId,jdbcType=INTEGER}
+  </update>
+</mapper>

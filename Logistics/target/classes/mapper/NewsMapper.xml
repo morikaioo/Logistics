@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wxl.logistic.dao.NewsMapper">
+  <resultMap id="BaseResultMap" type="wxl.logistic.bean.News">
+    <id column="NEWS_ID" jdbcType="INTEGER" property="newsId" />
+    <result column="TITLE" jdbcType="VARCHAR" property="title" />
+    <result column="NEWS_CONTENT" jdbcType="VARCHAR" property="newsContent" />
+    <result column="THEME_NAME" jdbcType="VARCHAR" property="themeName" />
+    <result column="AUTHOR" jdbcType="VARCHAR" property="author" />
+    <result column="CREATE_DATE" jdbcType="VARCHAR" property="createDate" />
+    <result column="MODIFY_DATE" jdbcType="VARCHAR" property="modifyDate" />
+    <result column="IMGPATH" jdbcType="VARCHAR" property="imgpath" />
+    <result column="READ_COUNT" jdbcType="INTEGER" property="readCount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    NEWS_ID, TITLE, NEWS_CONTENT, THEME_NAME, AUTHOR, CREATE_DATE, MODIFY_DATE, IMGPATH, 
+    READ_COUNT
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 分页查询 -->
+  <select id="selectLimit" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    <where>
+      <if test="cnews.newsId != null">
+       NEWS_ID = #{cnews.newsId,jdbcType=INTEGER}
+      </if>
+      <if test="cnews.newsId != null and cnews.title != null">
+      	and
+      </if>
+      <if test="cnews.title != null">
+        TITLE = #{cnews.title,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.title != null and cnews.newsContent != null">
+      	and
+      </if>
+      <if test="cnews.newsContent != null">
+        NEWS_CONTENT = #{cnews.newsContent,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.newsContent != null and cnews.themeName != null">
+      	and
+      </if>
+      <if test="cnews.themeName != null">
+        THEME_NAME = #{cnews.themeName,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.themeName != null and cnews.author != null">
+      	and
+      </if>
+      <if test="cnews.author != null">
+        AUTHOR = #{cnews.author,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.author != null and cnews.createDate != null">
+      	and
+      </if>
+      <if test="cnews.createDate != null">
+        CREATE_DATE = #{cnews.createDate,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.createDate != null and cnews.modifyDate != null">
+      	and
+      </if>
+      <if test="cnews.modifyDate != null">
+        MODIFY_DATE = #{cnews.modifyDate,jdbcType=VARCHAR},\
+      </if>
+      <if test="cnews.modifyDate != null and cnews.imgpath != null">
+      	and
+      </if>
+      <if test="cnews.imgpath != null">
+        IMGPATH = #{cnews.imgpath,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.imgpath != null and cnews.readCount != null">
+      	and
+      </if>
+      <if test="cnews.readCount != null">
+        READ_COUNT = #{cnews.readCount,jdbcType=INTEGER}
+      </if>
+		</where>
+		 order by CREATE_DATE
+		 <if test="start != null and pageSize != null">
+        limit #{start},#{pageSize}
+      </if>
+  </select>
+  
+  <!-- 按条件查询记录条数 -->
+  <select id="selectCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from news
+    <where>
+	  <if test="cnews.newsId != null">
+       NEWS_ID = #{cnews.newsId,jdbcType=INTEGER}
+      </if>
+      <if test="cnews.newsId != null and cnews.title != null">
+      	and
+      </if>
+      <if test="cnews.title != null">
+        TITLE = #{cnews.title,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.title != null and cnews.newsContent != null">
+      	and
+      </if>
+      <if test="cnews.newsContent != null">
+        NEWS_CONTENT = #{cnews.newsContent,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.newsContent != null and cnews.themeName != null">
+      	and
+      </if>
+      <if test="cnews.themeName != null">
+        THEME_NAME = #{cnews.themeName,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.themeName != null and cnews.author != null">
+      	and
+      </if>
+      <if test="cnews.author != null">
+        AUTHOR = #{cnews.author,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.author != null and cnews.createDate != null">
+      	and
+      </if>
+      <if test="cnews.createDate != null">
+        CREATE_DATE = #{cnews.createDate,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.createDate != null and cnews.modifyDate != null">
+      	and
+      </if>
+      <if test="cnews.modifyDate != null">
+        MODIFY_DATE = #{cnews.modifyDate,jdbcType=VARCHAR},\
+      </if>
+      <if test="cnews.modifyDate != null and cnews.imgpath != null">
+      	and
+      </if>
+      <if test="cnews.imgpath != null">
+        IMGPATH = #{cnews.imgpath,jdbcType=VARCHAR}
+      </if>
+      <if test="cnews.imgpath != null and cnews.readCount != null">
+      	and
+      </if>
+      <if test="cnews.readCount != null">
+        READ_COUNT = #{cnews.readCount,jdbcType=INTEGER}
+      </if>
+		</where>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from news
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="wxl.logistic.bean.News">
+    insert into news (TITLE, NEWS_CONTENT, 
+      THEME_NAME, AUTHOR, CREATE_DATE, 
+      MODIFY_DATE, IMGPATH, READ_COUNT
+      )
+    values (#{title,jdbcType=VARCHAR}, #{newsContent,jdbcType=VARCHAR}, 
+      #{themeName,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, 
+      #{modifyDate,jdbcType=VARCHAR}, #{imgpath,jdbcType=VARCHAR}, #{readCount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="wxl.logistic.bean.News">
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="newsId != null">
+        NEWS_ID,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="newsContent != null">
+        NEWS_CONTENT,
+      </if>
+      <if test="themeName != null">
+        THEME_NAME,
+      </if>
+      <if test="author != null">
+        AUTHOR,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="modifyDate != null">
+        MODIFY_DATE,
+      </if>
+      <if test="imgpath != null">
+        IMGPATH,
+      </if>
+      <if test="readCount != null">
+        READ_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="newsId != null">
+        #{newsId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContent != null">
+        #{newsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="themeName != null">
+        #{themeName,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        #{modifyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null">
+        #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="readCount != null">
+        #{readCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="wxl.logistic.bean.News">
+    update news
+    <set>
+      <if test="title != null">
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContent != null">
+        NEWS_CONTENT = #{newsContent,jdbcType=VARCHAR},
+      </if>
+      <if test="themeName != null">
+        THEME_NAME = #{themeName,jdbcType=VARCHAR},
+      </if>
+      <if test="author != null">
+        AUTHOR = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyDate != null">
+        MODIFY_DATE = #{modifyDate,jdbcType=VARCHAR},
+      </if>
+      <if test="imgpath != null">
+        IMGPATH = #{imgpath,jdbcType=VARCHAR},
+      </if>
+      <if test="readCount != null">
+        READ_COUNT = #{readCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="wxl.logistic.bean.News">
+    update news
+    set TITLE = #{title,jdbcType=VARCHAR},
+      NEWS_CONTENT = #{newsContent,jdbcType=VARCHAR},
+      THEME_NAME = #{themeName,jdbcType=VARCHAR},
+      AUTHOR = #{author,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=VARCHAR},
+      MODIFY_DATE = #{modifyDate,jdbcType=VARCHAR},
+      IMGPATH = #{imgpath,jdbcType=VARCHAR},
+      READ_COUNT = #{readCount,jdbcType=INTEGER}
+    where NEWS_ID = #{newsId,jdbcType=INTEGER}
+  </update>
+</mapper>
