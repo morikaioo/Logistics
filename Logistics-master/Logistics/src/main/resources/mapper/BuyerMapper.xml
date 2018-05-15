@@ -13,7 +13,8 @@
    <!--  <result column="AMOUNT" jdbcType="REAL" property="Amount" /> -->
   </resultMap>
   <sql id="Base_Column_List">
-    BUYER_ID, SUPPLIER_NAME, FOOD_NAME, FOOD_CATEGORY, PRICE, FOOD_NUMBER, BUY_DATE, BUY_NAME, (PRICE*FOOD_NUMBER*2) AS SUM
+    BUYER_ID, SUPPLIER_NAME, FOOD_NAME, FOOD_CATEGORY, PRICE, FOOD_NUMBER, BUY_DATE, BUY_NAME, (PRICE*FOOD_NUMBER*2) AS SUM   
+ <!-- SUM(PRICE*FOOD_NUMBER*2) AS JiSuan -->
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

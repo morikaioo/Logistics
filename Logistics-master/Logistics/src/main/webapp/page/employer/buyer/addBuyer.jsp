@@ -74,12 +74,6 @@
       				<input type="text" class="form-control" id="buyName" name="buyName">
     			</div>
   			</div>
-  			<!-- <div class="form-group" style="position: relative;top:-79px;">
-    			<label class="col-sm-2 control-label" for="inputError">总金额:</label>
-    			<div class="col-sm-10">
-      				<input type="text" class="form-control" id="Amount" name="Amount">
-    			</div>
-  			</div>  -->
   			<input type="button" onclick="buyer()" class="btn btn-success" value="提交" style="width:200px;height:34px;position:relative;top:-79px;left:123px;">
   			<input type="reset" id="reset" class="btn btn-info" value="重置" style="width:200px;height:34px;position:relative;top:-79px;left:213px;">
   			</form>

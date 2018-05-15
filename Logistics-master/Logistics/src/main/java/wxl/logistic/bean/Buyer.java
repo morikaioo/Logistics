@@ -18,9 +18,10 @@ public class Buyer {
     private Date buyDate;
 
     private String buyName;
-
-    
+ 
     private Float Sum;
+    
+    private Float JiSuan;
     
     public Integer getBuyerId() {
         return buyerId;
@@ -92,6 +93,14 @@ public class Buyer {
 
 	public void setSum(Float sum) {
 		Sum = sum;
+	}
+
+	public Float getJiSuan() {
+		return JiSuan;
+	}
+
+	public void setJiSuan(Float jiSuan) {
+		this.JiSuan = jiSuan;
 	}
 	
 }
