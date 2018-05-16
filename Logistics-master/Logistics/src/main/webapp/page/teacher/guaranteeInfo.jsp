@@ -24,11 +24,21 @@
 		${repairs.repairsStatus}
        </td><td class="userOpreate" style="width:12%;color:#6699cc;">
        	<c:if test="${repairs.repairsStatus == '待维修'}">
+       		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=维修中&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
+        	处理
+        	</a>
+		</c:if>
+		<c:if test="${repairs.repairsStatus == '维修中'}">
        		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=已维修&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
         	处理
         	</a>
 		</c:if>
 		<c:if test="${repairs.repairsStatus == '待保洁'}">
+       		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=保洁中&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
+        	处理
+        	</a>
+		</c:if>
+		<c:if test="${repairs.repairsStatus == '保洁中'}">
        		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=已保洁&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
         	处理
         	</a>

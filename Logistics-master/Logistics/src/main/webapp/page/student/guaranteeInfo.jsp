@@ -7,7 +7,13 @@
 <%-- <jsp:include page="../common/commonfile.jsp"/> --%>
 <table class="csstest" cellspacing="0" cellpadding="0" id="ContentPlaceHolder1_dg1" style="border-width:0px;border-style:None;width:100%;border-collapse:collapse;">
 	<tbody><tr align="left" style="color:#999999;background-color:White;height:20px;">
-		<td>报修内容</td><td>类项</td><td>提交人</td><td>报修时间</td><td>状态</td><td class="userOpreate">操作</td><td class="userOpreate">删除</td></tr>
+		<td>报修内容</td>
+		<td>类项</td>
+		<td>提交人</td>
+		<td>报修时间</td>
+		<td>状态</td>
+		<td class="userOpreate">操作</td>
+		<td class="userOpreate">删除</td></tr>
 	 <c:forEach items="${repairss}" var="repairs" varStatus="status">
 		<tr class="xuxianheng" align="left" style="background-color:White;font-weight:normal;font-style:normal;text-decoration:none;height:35px;border-bottom:1px dashed #999;">
 		<td style="width:45%;">
@@ -24,11 +30,21 @@
 		${repairs.repairsStatus}
        </td><td class="userOpreate" style="width:12%;color:#6699cc;">
        	<c:if test="${repairs.repairsStatus == '待维修'}">
+       		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=维修中&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
+        	处理
+        	</a>
+		</c:if>
+			<c:if test="${repairs.repairsStatus == '维修中'}">
        		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=已维修&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
         	处理
         	</a>
 		</c:if>
 		<c:if test="${repairs.repairsStatus == '待保洁'}">
+       		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=保洁中&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
+        	处理
+        	</a>
+		</c:if>
+		<c:if test="${repairs.repairsStatus == '保洁中'}">
        		<a href="${ctx}/repairs/updateById/?repairsId=${repairs.repairsId}&category=${repairs.repairsCategory}&repairsStatus=已保洁&repairsHandle=${trivialName}" class="csstest" style="color:#6699cc;">
         	处理
         	</a>
