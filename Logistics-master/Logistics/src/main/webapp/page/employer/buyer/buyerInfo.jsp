@@ -7,7 +7,7 @@
 <%-- <jsp:include page="../common/commonfile.jsp"/> --%>
 <table class="csstest" cellspacing="0" cellpadding="0" id="ContentPlaceHolder1_dg1" style="border-width:0px;border-style:None;width:100%;border-collapse:collapse;">
 	<tbody><tr align="left" style="color:#999999;background-color:White;height:20px;">
-		 <td>请选择</td> 
+		<td>选择</td> 
 		<td>供应商名字</td>
 		<td>食物名称</td>
 		<td>类型</td>
@@ -21,8 +21,9 @@
 		<tr class="xuxianheng"  align="left" style="background-color:White;font-weight:normal;font-style:normal;text-decoration:none;height:35px;border-bottom:1px dashed #999;"> 		
 
 	 <div class="checkbox">
-  <td><input type="checkbox" value="${buyer.sum}" name="test" id="aaa" style="width:15px;hight:15px;"> 
-		
+  		<td style="width:7%;">
+  			<input type="checkbox" value="<fmt:formatNumber value="${buyer.price*buyer.foodNumber}" pattern="#.0"/>" name="test" id="${buyer.buyerId}" style="width:15px;hight:15px;margin-left:7px;"> 
+		</td>
 		<td style="width:12%;">
         ${buyer.supplierName} 
 		</td>
@@ -41,7 +42,7 @@
 		${buyer.buyName}
        </td>
       <td style="width:8%;">
-      	${buyer.sum}
+      	<fmt:formatNumber value="${buyer.price*buyer.foodNumber}" pattern="#.0"/>
       </td>   
        <td class="userOpreate" style="width:8%;"><a href="${ctx}/buyer/deleteById/${buyer.buyerId}" style="color:#6699cc;">删除</a></td>
       <td class="userOpreate" style="width:5%;"><a href="${ctx}/buyer/selectById/${buyer.buyerId}" style="color:#6699cc;">修改</a></td>
@@ -59,11 +60,11 @@
  </body>
  <div class="bot1">
 				<div class="okLeft">
-					<input type="checkbox" name="test2" value="xx"><span style="display:block;margin-left: -10px;margin-top: 15px">全选</span>
-				<span style="display:block;margin-left: 280px;margin-top: -60px">已选商品<span id="numOk" style="color: #ff4400;font-size: 18px">0</span>件</span>
-				<span style="display:block;margin-left: 500px;margin-top: -20px">合计:<span id="okPrice" style="color: #ff4400" class="to glyphicon glyphicon-jpy">0</span></span>
+					<input type="checkbox" name="test2" value="xx" style="margin-top:0px;margin-left: 7px;">全选<span style="display:block;margin-left: 10px;margin-top: 18px">全选</span>
+					<span style="display:block;margin-left: 280px;margin-top: -60px">已选商品<span id="numOk" style="color: #ff4400;font-size: 18px">0</span>件</span>
+					<span style="display:block;margin-left: 500px;margin-top: -20px">合计:<span id="okPrice" style="color: #ff4400" class="to glyphicon glyphicon-jpy">0</span></span>
 				</div>
-				<button id="go" onclick="a()" style="display:block;margin-left: 650px;margin-top: -25px">结算  </button>
+				<button id="go" class="btn btn-success" onclick="settleAccounts()" style="display:block;margin-left: 650px;margin-top: -23px;width:55px;height:22px;line-height:9px;">结算  </button>
 			</div>
   <script type="text/javascript">
   	if ('${username}'!='employer') {
@@ -136,72 +137,78 @@
 		});
   	}
   	
-        $('input[name="test"]').on('change', function(){
-	var ok = document.getElementById('numOk');
-	var obj=document.getElementsByName('test'); //选择所有name="'test'"的对象，返回数组 
+    $('input[name="test"]').on('change', function(){
+		var ok = document.getElementById('numOk');
+		var obj=document.getElementsByName('test'); //选择所有name="'test'"的对象，返回数组 
 				
-                if($('input[name="test"]:checked').val()) {
-                    
-					var s=''; 
-					var arr = [];
-					
-					for(var i=0; i<obj.length; i++){ 
-						if(obj[i].checked){
-						var num1 = parseInt(obj[i].value); 
-							arr.push(num1);
-							
-						}
-					 
-					} 
-					ok.innerHTML=arr.length;
-					var sum = 0;
-					arr.forEach(function(item){
-						sum+=item;
-						$('#okPrice').html(sum);
-						
-					});
-				      }else{
-					$('#okPrice').html("0");
-				      ok.innerHTML=0;
-				      }
-				    })
+        if($('input[name="test"]:checked').val()) {
+			var arr = [];
+			//把已选商品的值放到arr数组中		
+			for(var i=0; i<obj.length; i++){ 
+				if(obj[i].checked){
+					var num1 = parseInt(obj[i].value); 
+					arr.push(num1);
+				}
+			} 
+			ok.innerHTML=arr.length;//把选中的数量显示在页面中
+			var sum = 0;
+			//累加计算总和
+			arr.forEach(function(item){
+				sum+=item;
+				$('#okPrice').html(sum);
+			});
+		}else{
+			$('#okPrice').html("0");
+			ok.innerHTML=0;
+		}
+	})
 				    			    
-				   $('input[name="test2"]').click(function(){//给全选按钮加上点击事件
+	$('input[name="test2"]').click(function(){//给全选按钮加上点击事件
         var xz = $(this).prop("checked");//判断全选按钮的选中状态
         var ck = $('input[name="test"]').prop("checked",xz);  //让class名为qx的选项的选中状态和全选按钮的选中状态一致。
-        var ck2 =  $('input[name="test1"]').prop("checked",xz); 
 
-          	var ok = document.getElementById('numOk');
-          	var obj=document.getElementsByName('test'); //选择所有name="'test'"的对象，返回数组 
-					//取到对象数组后，我们来循环检测它是不是被选中
-                if($('input[name="test"]:checked').val()) {                   
-					var s=''; 
-					var arr = [];
-					for(var i=0; i<obj.length; i++){ 
-						if(obj[i].checked){
-						 
-							arr.push(obj[i].value);
-						}
-					 
-					} 
-					ok.innerHTML=arr.length;
-				      }else{
-				      ok.innerHTML=0;
-				      }
+        var ok = document.getElementById('numOk');
+        var obj=document.getElementsByName('test'); //选择所有name="'test'"的对象，返回数组 
+		//取到对象数组后，我们来循环检测它是不是被选中
+        if($('input[name="test"]:checked').val()) {                   
+			var arr = [];
+			for(var i=0; i<obj.length; i++){ 
+				if(obj[i].checked){
+					var num1 = parseInt(obj[i].value);
+					arr.push(num1);
+				}
+			} 
+			ok.innerHTML=arr.length;
+			var sum = 0;
+			//累加计算总和
+			arr.forEach(function(item){
+				sum+=item;
+				$('#okPrice').html(sum);
+			});
+		}else{
+			$('#okPrice').html("0");
+			ok.innerHTML=0;
+		}
 				   
-				      
-        })		    
+    })		    
   
 	/* ************ */			    
 				    
-		 function a(){
-  		if($('input[name="test"]:checked').val()) {
-  			var obj=document.getElementsByName('test');
-  			return "${ctx}/page/employer/buyer/buyed.jsp";
+    function settleAccounts(){
+  		if($('input[name="test"]').prop("checked")) {
+  			var obj=$('input[name="test"]');
+  			var arr = [];
+			//把已选商品的值放到arr数组中		
+			for(var i=0; i<obj.length; i++){ 
+				if(obj[i].checked){
+					arr.push(obj[i].getAttribute("id"));
+				}
+			}
+			alert(arr)
   		}
   		else
   			alert("请先选择!");
-} 
+    } 
 
 		    
 	
