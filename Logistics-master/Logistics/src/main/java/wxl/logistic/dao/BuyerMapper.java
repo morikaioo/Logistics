@@ -21,4 +21,6 @@ public interface BuyerMapper {
     Integer selectCount(Map<String, Object> params);
 	
 	List<Buyer> selectLimit(Map<String, Object> params);
+	
+	Integer updateBatchStatus(List<Integer> buyIds);
 }

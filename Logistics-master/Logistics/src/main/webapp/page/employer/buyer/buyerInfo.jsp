@@ -16,34 +16,53 @@
 		<td>采购时间</td>
 		<td>采购人</td>
 		<td>总计</td>
+		<td>状态</td>
 		<td class="userOpreate">操作</td><td class="userOpreate">更改</td></tr>
 	 <c:forEach items="${buyers}" var="buyer" varStatus="status"> 
 		<tr class="xuxianheng"  align="left" style="background-color:White;font-weight:normal;font-style:normal;text-decoration:none;height:35px;border-bottom:1px dashed #999;"> 		
 
-	 <div class="checkbox">
+	 <div class="userOpreate">
   		<td style="width:7%;">
-  			<input type="checkbox" value="<fmt:formatNumber value="${buyer.price*buyer.foodNumber}" pattern="#.0"/>" name="test" id="${buyer.buyerId}" style="width:15px;hight:15px;margin-left:7px;"> 
+  			<c:if test="${buyer.settleStatus == 0}">
+       			<input type="checkbox" value="<fmt:formatNumber value="${buyer.price*buyer.foodNumber}" pattern="#.0"/>" 
+  					name="test" id="${buyer.buyerId}" style="width:15px;hight:15px;margin-left:7px;"
+  				> 
+			</c:if>
+			<c:if test="${buyer.settleStatus == 1}">
+       			<input type="checkbox" value="" 
+  				 style="width:15px;hight:15px;margin-left:7px;" disabled="disabled"
+  				>
+			</c:if>
+  			
 		</td>
 		<td style="width:12%;">
         ${buyer.supplierName} 
 		</td>
-		<td style="width:12%;">       
+		<td style="width:11%;">       
         ${buyer.foodName}
-        </td><td style="width:10%;">
+        </td><td style="width:8%;">
         ${buyer.foodCategory}
-      </td><td style="width:8%;">
+      </td><td style="width:7%;">
         ${buyer.price}
       </td><td style="width:8%;">
       	${buyer.foodNumber}
       </td><td style="width:12%;">
 		<fmt:formatDate value="${buyer.buyDate}" pattern="yyyy-MM-dd" />
        </td>
-       </td><td style="width:10%;">
+       </td><td style="width:8%;">
 		${buyer.buyName}
        </td>
       <td style="width:8%;">
       	<fmt:formatNumber value="${buyer.price*buyer.foodNumber}" pattern="#.0"/>
-      </td>   
+      </td>
+      <td style="width:7%;">
+      	<c:if test="${buyer.settleStatus == 0}">
+       		未结算
+		</c:if>
+		<c:if test="${buyer.settleStatus == 1}">
+       		已结算
+		</c:if>
+	  </td>   
        <td class="userOpreate" style="width:8%;"><a href="${ctx}/buyer/deleteById/${buyer.buyerId}" style="color:#6699cc;">删除</a></td>
       <td class="userOpreate" style="width:5%;"><a href="${ctx}/buyer/selectById/${buyer.buyerId}" style="color:#6699cc;">修改</a></td>
 </td></div>
@@ -58,7 +77,7 @@
       <input name="jump" type="text" id="jump" style="width:30px;" value="1">
       <input type="button" style="width:55px;" title="转到该页" value="转到该页" onclick="jump()"></div>
  </body>
- <div class="bot1">
+ <div class="userOpreate">
 				<div class="okLeft">
 					<input type="checkbox" name="test2" value="xx" style="margin-top:0px;margin-left: 7px;">全选<span style="display:block;margin-left: 10px;margin-top: 18px">全选</span>
 					<span style="display:block;margin-left: 280px;margin-top: -60px">已选商品<span id="numOk" style="color: #ff4400;font-size: 18px">0</span>件</span>
@@ -195,7 +214,7 @@
 	/* ************ */			    
 				    
     function settleAccounts(){
-  		if($('input[name="test"]').prop("checked")) {
+  		if($('input[name="test"]:checked').val()) {
   			var obj=$('input[name="test"]');
   			var arr = [];
 			//把已选商品的值放到arr数组中		
@@ -204,7 +223,24 @@
 					arr.push(obj[i].getAttribute("id"));
 				}
 			}
-			alert(arr)
+			$.ajax({
+				type: "POST",
+				url: "${ctx}/buyer/updateBatchStatus",
+				data: {buyIds:JSON.stringify(arr)},
+				dataType: 'JSON',
+				success: function(result) {
+					if(result>0){
+						alert("结算成功!");
+						window.location.href="${ctx}/page/employer/buyer/buyer.jsp"
+					}else{
+						alert("结算失败!");
+					}
+					
+				},
+				error:function(XMLHttpRequest,testStatusm,errorThrown){
+					alert("请求失败！");
+				},
+			});
   		}
   		else
   			alert("请先选择!");

@@ -1,5 +1,6 @@
 package wxl.logistic.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -130,5 +132,21 @@ public class BuyerController {
 		return "/page/employer/buyer/buyer";
 	}
 
+	@ResponseBody
+	@RequestMapping(value = "/updateBatchStatus",method=RequestMethod.POST)
+    public String updateBatchStatus(@RequestParam(value="buyIds")String buyIds) {
+		int judge = 0;
+		JSONArray jsonArray = new JSONArray(buyIds);
+		List<Integer> list = new ArrayList<Integer>();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			list.add(Integer.valueOf(jsonArray.getInt(i)));
+		}
+		try {
+			judge = buyerService.updateBatchStatus(list);
+		} catch (Exception e) {
+		}
+		
+		return judge+"";
+	}
 	
 }

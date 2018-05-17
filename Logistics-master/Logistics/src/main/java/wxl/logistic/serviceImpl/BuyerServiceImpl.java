@@ -51,5 +51,11 @@ public class BuyerServiceImpl implements BuyerService{
 		
 		return buyerMapper.selectByPrimaryKey(buyerId);
 	}
+
+	@Override
+	public Integer updateBatchStatus(List<Integer> buyIds) {
+		
+		return buyerMapper.updateBatchStatus(buyIds);
+	}
 	
 }

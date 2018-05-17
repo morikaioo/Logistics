@@ -24,5 +24,8 @@ public interface BuyerService {
     
     //根据ID查询信息
     public Buyer selectByPrimaryKey(Integer buyerId);
+    
+    //批量修改结算状态
+    Integer updateBatchStatus(List<Integer> buyIds);
 	
 }

@@ -23,6 +23,16 @@ public class Buyer {
     
     private Float JiSuan;
     
+    private Integer settleStatus;
+    
+    public Integer getSettleStatus() {
+		return settleStatus;
+	}
+    
+    public void setSettleStatus(Integer settleStatus) {
+		this.settleStatus = settleStatus;
+	}
+    
     public Integer getBuyerId() {
         return buyerId;
     }

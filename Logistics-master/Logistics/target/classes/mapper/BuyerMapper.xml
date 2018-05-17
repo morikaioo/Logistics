@@ -10,10 +10,11 @@
     <result column="FOOD_NUMBER" jdbcType="INTEGER" property="foodNumber" />
     <result column="BUY_DATE" jdbcType="TIMESTAMP" property="buyDate" />
     <result column="BUY_NAME" jdbcType="VARCHAR" property="buyName" />
+    <result column="SETTLE_STATUS" jdbcType="INTEGER" property="settleStatus" />
    <!--  <result column="AMOUNT" jdbcType="REAL" property="Amount" /> -->
   </resultMap>
   <sql id="Base_Column_List">
-    BUYER_ID, SUPPLIER_NAME, FOOD_NAME, FOOD_CATEGORY, PRICE, FOOD_NUMBER, BUY_DATE, BUY_NAME, (PRICE*FOOD_NUMBER*2) AS SUM   
+    BUYER_ID, SUPPLIER_NAME, FOOD_NAME, FOOD_CATEGORY, PRICE, FOOD_NUMBER, BUY_DATE, BUY_NAME, SETTLE_STATUS,(PRICE*FOOD_NUMBER*2) AS SUM   
  <!-- SUM(PRICE*FOOD_NUMBER*2) AS JiSuan -->
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -68,9 +69,12 @@
       <if test="cbuyer.buyName != null">
         BUY_NAME = #{cbuyer.buyName,jdbcType=VARCHAR},
         </if>
-        <if test="cbuyer.buyName != null and cbuyer.Amount != null">
+        <if test="cbuyer.buyName != null and cbuyer.settleStatus != null">
       	and
       </if>
+      <if test="cbuyer.settleStatus != null">
+        SETTLE_STATUS = #{cbuyer.settleStatus,jdbcType=INTEGER},
+        </if>
      <!-- <if test="cbuyer.Amount != null">
         AMOUNT =#{cbuyer.Amount,jdbcType=REAL}, 
         </if> -->
@@ -124,8 +128,11 @@
       <if test="cbuyer.buyName != null">
         BUY_NAME = #{cbuyer.buyName,jdbcType=VARCHAR},
       </if>
-      <if test="cbuyer.buyName != null and cbuyer.Amount != null">
+      <if test="cbuyer.buyName != null and cbuyer.settleStatus != null">
       	and
+      </if>
+      <if test="cbuyer.settleStatus != null">
+        SETTLE_STATUS = #{cbuyer.settleStatus,jdbcType=INTEGER},
       </if>
       <!-- <if test="cbuyer.Amount != null">
         AMOUNT = #{cbuyer.Amount,jdbcType=REAL},
@@ -229,6 +236,9 @@
       <if test="buyName != null">
         BUY_NAME = #{buyName,jdbcType=VARCHAR},
       </if>
+      <if test="cbuyer.settleStatus != null">
+        SETTLE_STATUS = #{settleStatus,jdbcType=INTEGER},
+      </if>
      <!--  <if test="Amount != null">
         AMOUNT = PRICE*FOOD_NUMBER*2
         #{Amount,jdbcType=REAL},
@@ -248,5 +258,14 @@
      <!--  AMOUNT = PRICE*FOOD_NUMBER*2 -->
      <!--  #{Amount,jdbcType=INTEGER} -->
     where BUYER_ID = #{buyerId,jdbcType=REAL}
+  </update>
+  <update id="updateBatchStatus" parameterType="java.util.List">
+  	<if test="null!=list and list.size>0">
+  		update buyer set SETTLE_STATUS = 1 where 
+  		BUYER_ID in
+  		<foreach collection="list" item="buyerId" open="(" separator="," close=")">
+  			#{buyerId}
+  		</foreach>
+  	</if>
   </update>
 </mapper>
