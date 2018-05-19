@@ -86,9 +86,9 @@
 				<button id="go" class="btn btn-success" onclick="settleAccounts()" style="display:block;margin-left: 650px;margin-top: -23px;width:55px;height:22px;line-height:9px;">结算  </button>
 			</div>
   <script type="text/javascript">
-  	if ('${username}'!='employer') {
+  	if ('${privilege}'!='1' || '${userCategory}'!='工作人员' || '${userDepartment}'!='采购部') {
 		$(".userOpreate").hide();
-	}	
+	}
   	function jump(){
   		var jumpPage = $("#jump").val();
   		$.ajax({

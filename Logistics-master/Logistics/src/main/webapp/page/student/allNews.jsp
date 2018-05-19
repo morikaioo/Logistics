@@ -39,9 +39,9 @@
 <jsp:include page="../common/foot.jsp"/>
 <script type="text/javascript">
 	$(function(){
-		
-		if ('${username}'!='student') {
+		if ('${privilege}'!='1' || '${userCategory}'!='学生' || '${userDepartment}'!='学生类') {
 			$("#addNews").hide();
+			$(".userOpreate").hide();
 		}
 		
 		if ('${judge}'=='1') {

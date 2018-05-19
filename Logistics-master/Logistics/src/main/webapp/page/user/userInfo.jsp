@@ -9,23 +9,32 @@
   <table class="table">
     <thead>
       <tr>
-        <th>姓名</th>
-        <th>电话号码</th>
-        <th>类项</th>
-        <th>更新时间</th>
-        <th>部门</th>
-        <th class="userOpreate">操作</th></tr>
+        <th style="width:%10;">姓名</th>
+        <th style="width:%10;">电话号码</th>
+        <th style="width:%10;">类项</th>
+        <th style="width:%10;">更新时间</th>
+        <th style="width:%10;">部门</th>
+        <th class="userOpreate" style="width:%10;">权限</th>
+        <th class="userOpreate" style="width:%10;">操作</th></tr>
     </thead>
     <tbody>
       <c:forEach items="${users}" var="user" varStatus="status">
-                        <tr>
-                        	<td style="width:10%;">${user.trivialName}</td>
-                        	<td style="width:10%;">${user.phone}</td>
-                            <td style="width:10%;">${user.category}</td>
-                            <td style="width:10%;"><fmt:formatDate value="${user.registerTime}" pattern="yyyy-MM-dd"/></td>
-                            <td style="width:5%;">${user.department}</td>
-                            <td class="userOpreate" style="width:2%;"><a href="${ctx}/user/selectById/${user.userName}" style="color:#6699cc;">修改</a></td>
-                        </tr>
+      					<c:if test="${user.userName != 'admin'}">
+                            <tr>
+                        	<td >${user.trivialName}</td>
+                        	<td >${user.phone}</td>
+                            <td >${user.category}</td>
+                            <td ><fmt:formatDate value="${user.registerTime}" pattern="yyyy-MM-dd"/></td>
+                            <td >${user.department}</td>
+                            <c:if test="${user.privilege == 0}">
+                            	<td class="userOpreate" ><a onclick="updatePrivilege('${user.userId}',1)" style="color:#6699cc;cursor:pointer">赋权</a></td>
+							</c:if>
+							<c:if test="${user.privilege == 1}">
+								<td class="userOpreate" ><a onclick="updatePrivilege('${user.userId}',0)" style="color:#6699cc;cursor:pointer">撤销</a></td>
+							</c:if>
+                            <td class="userOpreate" ><a href="${ctx}/user/selectById/${user.userName}" style="color:#6699cc;">修改</a></td>
+                        	</tr>
+						</c:if>
        </c:forEach>
     </tbody>
   </table>
@@ -40,7 +49,7 @@
       <input type="button" style="width:55px;" title="转到该页" value="转到该页" onclick="jump()"></div>
   </body>
   <script type="text/javascript">
-  	if ('${username}'!='student') {
+  	if ('${username}'!='admin') {
 		$(".userOpreate").hide();
 	}
   	function jump(){
@@ -110,5 +119,25 @@
 			},
 		});
   	}
-  
+  	//修改用户权限
+  	function updatePrivilege(userId,privilege){
+		$.ajax({
+			type: "post",
+			url: "${ctx}/user/updateUser",
+			data: {userId:userId,privilege:privilege},
+			dataType: 'text',
+			success: function(result) {
+				if(result=="true"){
+					alert("操作成功!");
+					window.location.href="${ctx}/page/student/infoAdmin.jsp";
+				}else{
+					alert("操作失败!");
+					return;
+				}
+			},
+			error:function(XMLHttpRequest,testStatusm,errorThrown){
+				alert("请求失败！");
+			},
+		});
+	}
   </script>

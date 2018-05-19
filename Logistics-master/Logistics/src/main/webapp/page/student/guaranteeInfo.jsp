@@ -71,9 +71,10 @@
       <input type="button" style="width:55px;" title="转到该页" value="转到该页" onclick="jump()"></div>
   </body>
   <script type="text/javascript">
-  	if ('${username}'!='student') {
+  	if ('${privilege}'!='1' || '${userCategory}'!='工作人员' || '${userDepartment}'!='宿管部') {
 		$(".userOpreate").hide();
 	}
+  	
   	function jump(){
   		var jumpPage = $("#jump").val();
   		$.ajax({

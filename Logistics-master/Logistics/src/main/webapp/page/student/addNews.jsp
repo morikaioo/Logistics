@@ -64,7 +64,7 @@
 
 </style>
 <script type="text/javascript">
-if ('${username}'!='student') {
+if ('${privilege}'!='1' || '${userCategory}'!='学生' || '${userDepartment}'!='学生类') {
 	alert('对不起，您的用户没有权限');
 	return;
 }

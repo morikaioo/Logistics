@@ -39,9 +39,6 @@
 <jsp:include page="../../common/foot.jsp"/>
 <script type="text/javascript">
 	$(function(){
-		if ('${username}'!='employer') {
-			$(".userOpreate").hide();
-		}
 		
 		if ('${judge}'=='1') {
 			alert("删除成功!")

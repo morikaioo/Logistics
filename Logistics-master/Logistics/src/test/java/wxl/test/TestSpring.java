@@ -37,12 +37,6 @@ public class TestSpring {
 		System.out.println(dataSource);
 	}
 	
-	@Test
-	public void testData2() {
-		User user = new User(null, "2", "2", "2", "aaa", "2", "2", "2", null);
-		UserMapper userMapper = (UserMapper) ctx.getBean("userMapper");
-		System.out.println(userMapper.selectLike(user));
-	}
 	
 	@Test
 	public void testData7() {
@@ -79,25 +73,7 @@ public class TestSpring {
 		System.out.println(repairsMapper.selectLimit(params));
 	}
 	
-	@Test
-    public void sqlSessionFactoryTest() {
-		UserMapper userMapper = (UserMapper) ctx.getBean("userMapper");
-		Map<String, Object> params = new HashMap<String, Object>();
-		User user = new User(null, "xiaoming", "xxxxxx", "12346678", "好", "男", "学生", "学生", null);
-		params.put("cuser", user);
-		params.put("start", 0);
-		params.put("pageSize",10);
-		System.out.println(userMapper.selectLimit(params));
-    }
 
-	@Test
-	public void testData3() {
-		UserMapper userMapper = (UserMapper) ctx.getBean("userMapper");
-		Map<String, Object> params = new HashMap<String, Object>();
-		User user = new User(null, null, null, "12346678", "好", "男", "学生", "学生", null);
-		params.put("cuser", user);
-		System.out.println(userMapper.selectCount(params));
-	}
 	
 	@Test
 	public void testData4() {

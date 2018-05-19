@@ -20,7 +20,7 @@
 }
 </style>
 <div class="top-bar" style="height: 30px;line-height: 30px;color: White;height: 32px;background-color: #333;">
-	<span style="font-size:13px;float:left;margin-left:100px;">欢迎您来到后勤管理系统</span> <a id="login" href="${ctx}/page/user/login.jsp" style="color: White;font-size:13px;float:right;margin-right:130px;">登录</a><a id="register" href="${ctx}/page/user/register.jsp" style="color: White;font-size:13px;float:right;margin-right:-70px;">注册</a>
+	<span style="font-size:13px;float:left;margin-left:100px;">欢迎${username}来到后勤管理系统</span> <a id="login" href="${ctx}/page/user/login.jsp" style="color: White;font-size:13px;float:right;margin-right:130px;">登录</a><a id="register" href="${ctx}/page/user/register.jsp" style="color: White;font-size:13px;float:right;margin-right:-70px;">注册</a>
 </div>
 <div class="top-siade" style="height:135px;background-color:#79aa34;">
 

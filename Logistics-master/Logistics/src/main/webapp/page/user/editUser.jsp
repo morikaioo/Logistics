@@ -102,7 +102,7 @@
 			}
 		}
 		$.ajax({
-			type: "post",
+			type: "get",
 			url: "${ctx}/user/updateUser?userId=${user.userId}",
 			data: $('#userForm').serializeArray(),
 			dataType: 'text',

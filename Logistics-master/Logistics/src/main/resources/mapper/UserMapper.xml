@@ -11,9 +11,10 @@
     <result column="CATEGORY" jdbcType="VARCHAR" property="category" />
     <result column="DEPARTMENT" jdbcType="VARCHAR" property="department" />
     <result column="REGISTER_TIME" jdbcType="TIMESTAMP" property="registerTime" />
+  	<result column="PRIVILEGE" jdbcType="INTEGER" property="privilege" />
   </resultMap>
   <sql id="Base_Column_List">
-    USER_ID, USER_NAME, PASSWORD, PHONE, TRIVIAL_NAME, SEX, CATEGORY, DEPARTMENT, REGISTER_TIME
+    USER_ID, USER_NAME, PASSWORD, PHONE, TRIVIAL_NAME, SEX, CATEGORY, DEPARTMENT, REGISTER_TIME, PRIVILEGE
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -247,6 +248,9 @@
       </if>
       <if test="registerTime != null">
         REGISTER_TIME = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="privilege != null">
+        PRIVILEGE = #{privilege,jdbcType=INTEGER},
       </if>
     </set>
     where USER_ID = #{userId,jdbcType=INTEGER}

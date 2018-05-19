@@ -20,6 +20,16 @@ public class User {
     private String department;
 
     private Date registerTime;
+    
+    private Integer privilege;
+    
+    public void setPrivilege(Integer privilege) {
+		this.privilege = privilege;
+	}
+    
+    public Integer getPrivilege() {
+		return privilege;
+	}
 
     public Integer getUserId() {
         return userId;
@@ -100,8 +110,9 @@ public class User {
 				+ department + ", registerTime=" + registerTime + "]";
 	}
 
+
 	public User(Integer userId, String userName, String password, String phone, String trivialName, String sex,
-			String category, String department, Date registerTime) {
+			String category, String department, Date registerTime, Integer privilege) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -112,6 +123,7 @@ public class User {
 		this.category = category;
 		this.department = department;
 		this.registerTime = registerTime;
+		this.privilege = privilege;
 	}
 
 	public User() {

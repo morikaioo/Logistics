@@ -21,7 +21,7 @@
     <div class="leftmenu fl">
 		<dl class="sidemenu">
             <dt>教室维护</dt>
-			<dd class="userOpreate"><a href="${ctx}/page/teacher/guarantee.jsp"><i class="icon sideicon1"></i>教室报修</a><i class="icon sideicon2"></i></dd>
+			<dd class="teacherOpreate"><a href="${ctx}/page/teacher/guarantee.jsp"><i class="icon sideicon1"></i>教室报修</a><i class="icon sideicon2"></i></dd>
 		 	<dd class=""><a href="${ctx}/page/teacher/repair.jsp"><i class="icon sideicon1"></i>教室维修</a><i class="icon sideicon2"></i></dd>
         	<dd class="active"><a href="${ctx}/page/teacher/sanitation.jsp"><i class="icon sideicon1"></i>卫生保洁</a><i class="icon sideicon2"></i></dd>
         </dl>
@@ -39,9 +39,6 @@
 <jsp:include page="../common/foot.jsp"/>
 <script type="text/javascript">
 	$(function(){
-		if ('${username}'!='teacher') {
-			$(".userOpreate").hide();
-		}
 		
 		if ('${judge}'=='1') {
 			alert("删除成功!")

@@ -40,7 +40,7 @@
       <input type="button" style="width:55px;" title="转到该页" value="转到该页" onclick="jump()"></div>
   </body>
   <script type="text/javascript">
-  	if ('${username}'!='student') {
+  if ('${privilege}'!='1' || '${userCategory}'!='学生' || '${userDepartment}'!='学生类') {
 		$(".userOpreate").hide();
 	}
   	function jump(){

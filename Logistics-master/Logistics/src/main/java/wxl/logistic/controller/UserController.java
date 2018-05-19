@@ -86,8 +86,9 @@ public class UserController {
 			request.getSession().setAttribute("username", username);
 			request.getSession().setAttribute("uid", user.getUserId());
 			request.getSession().setAttribute("trivialName", user.getTrivialName());
-			request.getSession().setAttribute("category", user.getCategory());
-			
+			request.getSession().setAttribute("userCategory", user.getCategory());
+			request.getSession().setAttribute("privilege", user.getPrivilege());
+			request.getSession().setAttribute("userDepartment", user.getDepartment());
 			return "true";
 			
 		} else {

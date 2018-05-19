@@ -67,10 +67,11 @@
 <jsp:include page="../common/foot.jsp"/>
 <script type="text/javascript">
 function guarantee(){
-	if ('${username}'=='') {
-		alert('对不起，请您先登录!');
+	if ('${privilege}'!='1' || '${userCategory}'!='教师') {
+		alert('对不起，您没有权限!');
 		return;
 	}
+	
 	var data = $('#guaranteeForm').serializeArray();
 	for (var i = 0; i < data.length; i++) {
 		if (data[i].value=="") {
@@ -86,6 +87,7 @@ function guarantee(){
 		success: function(result) {
 			if(result=="1"){
 				alert("提交成功!");
+				window.location.href="${ctx}/page/teacher/repair.jsp";
 			}else{
 				alert("提交失败!");
 				return;
