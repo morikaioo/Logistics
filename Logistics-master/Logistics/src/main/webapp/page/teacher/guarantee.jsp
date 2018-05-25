@@ -69,7 +69,7 @@
 function guarantee(){
 	if ('${privilege}'!='1' || '${userCategory}'!='教师') {
 		alert('对不起，您没有权限!');
-		return;
+		error;
 	}
 	
 	var data = $('#guaranteeForm').serializeArray();

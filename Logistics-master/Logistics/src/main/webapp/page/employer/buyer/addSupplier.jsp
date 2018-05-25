@@ -70,7 +70,7 @@
 	function supplier(){
 		if ('${username}'=='') {
 			alert('对不起，请您先登录!');
-			return;
+			error;
 		}
 		var data = $('#suppilerForm').serializeArray();
 		for (var i = 0; i < data.length; i++) {

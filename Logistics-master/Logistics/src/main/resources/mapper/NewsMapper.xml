@@ -81,7 +81,7 @@
         READ_COUNT = #{cnews.readCount,jdbcType=INTEGER}
       </if>
 		</where>
-		 order by CREATE_DATE
+		 order by CREATE_DATE desc
 		 <if test="start != null and pageSize != null">
         limit #{start},#{pageSize}
       </if>

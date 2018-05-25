@@ -89,7 +89,7 @@
 	function buyer(){
 		if ('${username}'=='') {
 			alert('对不起，请您先登录!');
-			return;
+			error;
 		}
 		var data = $('#buyerForm').serializeArray();
 		for (var i = 0; i < data.length; i++) {

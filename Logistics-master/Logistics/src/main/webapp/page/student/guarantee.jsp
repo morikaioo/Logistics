@@ -69,7 +69,7 @@
 function guarantee(){
 	if ('${username}'=='') {
 		alert('对不起，请您先登录!');
-		return;
+		error;
 	}
 	var data = $('#guaranteeForm').serializeArray();
 	for (var i = 0; i < data.length; i++) {
