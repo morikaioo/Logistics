@@ -145,6 +145,129 @@
 		</where>
   </select>
   
+  <!-- 模糊、分页查询报修信息 -->
+  <select id="selectLikeLmt" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from repairs
+    <where>
+      <if test="crepairs.repairsId != null">
+       REPAIRS_ID like concat('%',concat(#{crepairs.repairsId},'%'))
+      </if>
+      <if test="crepairs.repairsId != null and crepairs.repairsPerson != null">
+      	or
+      </if>
+      <if test="crepairs.repairsPerson != null">
+        REPAIRS_PERSON like concat('%',concat(#{crepairs.repairsPerson},'%'))
+      </if>
+      <if test="crepairs.repairsPerson != null and crepairs.repairsContent != null">
+      	or
+      </if>
+      <if test="crepairs.repairsContent != null">
+        REPAIRS_CONTENT like concat('%',concat(#{crepairs.repairsContent},'%'))
+      </if>
+      <if test="crepairs.repairsContent != null and crepairs.repairsCategory != null">
+      	or
+      </if>
+      <if test="crepairs.repairsCategory != null">
+        REPAIRS_CATEGORY like concat('%',concat(#{crepairs.repairsCategory},'%'))
+      </if>
+      <if test="crepairs.repairsCategory != null and crepairs.repairsAddress != null">
+      	or
+      </if>
+      <if test="crepairs.repairsAddress != null">
+        REPAIRS_address like concat('%',concat(#{crepairs.repairsAddress},'%'))
+      </if>
+      <if test="crepairs.repairsAddress != null and crepairs.repairsTime != null">
+      	or
+      </if>
+      <if test="crepairs.repairsTime != null">
+        REPAIRS_TIME like concat('%',concat(#{crepairs.repairsTime},'%'))
+      </if>
+      <if test="crepairs.repairsTime != null and crepairs.repairsStatus != null">
+      	or
+      </if>
+      <if test="crepairs.repairsStatus != null">
+        REPAIRS_STATUS like concat('%',concat(#{crepairs.repairsStatus},'%'))
+      </if>
+      <if test="crepairs.repairsStatus != null and crepairs.handleTime != null">
+      	or
+      </if>
+      <if test="crepairs.handleTime != null">
+        HANDLE_TIME like concat('%',concat(#{crepairs.handleTime},'%'))
+      </if>
+      <if test="crepairs.handleTime != null and crepairs.repairsHandle != null">
+      	or
+      </if>
+      <if test="crepairs.repairsHandle != null">
+        REPAIRS_HANDLE like concat('%',concat(#{crepairs.repairsHandle},'%'))
+      </if>
+		</where>
+		 order by REPAIRS_TIME desc
+		 <if test="start != null and pageSize != null">
+        limit #{start},#{pageSize}
+      </if>
+  </select>
+  
+  <!-- 模糊、分页查询报修信息记录条数 -->
+  <select id="selectLikeLmtCount" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+    select count(1) from repairs
+    <where>
+      <if test="crepairs.repairsId != null">
+       REPAIRS_ID like concat('%',concat(#{crepairs.repairsId},'%'))
+      </if>
+      <if test="crepairs.repairsId != null and crepairs.repairsPerson != null">
+      	or
+      </if>
+      <if test="crepairs.repairsPerson != null">
+        REPAIRS_PERSON like concat('%',concat(#{crepairs.repairsPerson},'%'))
+      </if>
+      <if test="crepairs.repairsPerson != null and crepairs.repairsContent != null">
+      	or
+      </if>
+      <if test="crepairs.repairsContent != null">
+        REPAIRS_CONTENT like concat('%',concat(#{crepairs.repairsContent},'%'))
+      </if>
+      <if test="crepairs.repairsContent != null and crepairs.repairsCategory != null">
+      	or
+      </if>
+      <if test="crepairs.repairsCategory != null">
+        REPAIRS_CATEGORY like concat('%',concat(#{crepairs.repairsCategory},'%'))
+      </if>
+      <if test="crepairs.repairsCategory != null and crepairs.repairsAddress != null">
+      	or
+      </if>
+      <if test="crepairs.repairsAddress != null">
+        REPAIRS_address like concat('%',concat(#{crepairs.repairsAddress},'%'))
+      </if>
+      <if test="crepairs.repairsAddress != null and crepairs.repairsTime != null">
+      	or
+      </if>
+      <if test="crepairs.repairsTime != null">
+        REPAIRS_TIME like concat('%',concat(#{crepairs.repairsTime},'%'))
+      </if>
+      <if test="crepairs.repairsTime != null and crepairs.repairsStatus != null">
+      	or
+      </if>
+      <if test="crepairs.repairsStatus != null">
+        REPAIRS_STATUS like concat('%',concat(#{crepairs.repairsStatus},'%'))
+      </if>
+      <if test="crepairs.repairsStatus != null and crepairs.handleTime != null">
+      	or
+      </if>
+      <if test="crepairs.handleTime != null">
+        HANDLE_TIME like concat('%',concat(#{crepairs.handleTime},'%'))
+      </if>
+      <if test="crepairs.handleTime != null and crepairs.repairsHandle != null">
+      	or
+      </if>
+      <if test="crepairs.repairsHandle != null">
+        REPAIRS_HANDLE like concat('%',concat(#{crepairs.repairsHandle},'%'))
+      </if>
+		</where>
+  </select>
+  
+  <!-- 根据ID删除报修信息 -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from repairs
     where REPAIRS_ID = #{repairsId,jdbcType=INTEGER}
